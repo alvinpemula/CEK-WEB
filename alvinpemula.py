@@ -7,25 +7,25 @@ import socket
 from rich.console import Console
 from rich.table import Table
 from rich.panel import Panel
-from rich.progress import Progress, BarColumn, TimeRemainingColumn
-from rich.text import Text
+from rich.live import Live
 
+# Inisialisasi Console Rich
 console = Console()
 
-# Bersihkan layar sebelum meminta input
-os.system("clear")
+# Bersihkan layar
+os.system("clear" if os.name == "posix" else "cls")
 
-# Tampilan Profesional
+# Tampilan Awal (Langsung Ditampilkan)
 console.print(Panel("[bold red]🔥 SUPER LOAD TESTER ULTRA PRO MAX 🔥[/bold red]\n[bold cyan]by Alvin[/bold cyan]", expand=False))
 
-# Input URL
-console.print(Panel("[bold cyan]Masukkan URL website yang ingin diuji:[/bold cyan]"), end=" ")
-URL = input().strip()
+# Masukkan URL
+console.print(Panel("[bold cyan]Masukkan URL website yang ingin diuji:[/bold cyan]"))
+URL = console.input("[bold yellow]>> [/bold yellow]").strip()
 
 if not URL.startswith(("http://", "https://")):
     URL = "https://" + URL
 
-# Auto-detect apakah website aktif
+# Mengecek Status Website
 console.print(Panel("[bold yellow]🔍 Mengecek status website...[/bold yellow]"))
 try:
     response = requests.get(URL, timeout=5)
@@ -37,7 +37,7 @@ except:
     console.print("[bold red]❌ Website tidak dapat diakses![/bold red]")
     exit()
 
-# Ping ke website
+# Mengecek Latensi Website
 console.print(Panel("[bold yellow]🔍 Mengecek latensi website...[/bold yellow]"))
 hostname = URL.replace("https://", "").replace("http://", "").split("/")[0]
 try:
@@ -50,7 +50,7 @@ try:
 except:
     console.print("[bold red]❌ Tidak dapat mengukur latensi![/bold red]")
 
-# Menampilkan informasi server
+# Informasi Server
 server_info = response.headers.get("Server", "Tidak diketahui")
 content_length = response.headers.get("Content-Length", "Tidak diketahui")
 if content_length != "Tidak diketahui":
@@ -58,94 +58,85 @@ if content_length != "Tidak diketahui":
 
 console.print(Panel(f"🖥️ [bold cyan]Informasi Server:[/bold cyan]\nServer: {server_info}\nUkuran Response: {content_length}"))
 
-# Pilih mode uji coba
-console.print(Panel("[bold magenta]Pilih mode pengujian:\n1. Normal (1000 request)\n2. Brutal (10000 request)\n3. Max Destruction (100000 request)[/bold magenta]"), end=" ")
-mode = int(input().strip())
+# Pilih Mode Pengujian
+console.print(Panel("[bold magenta]Pilih mode pengujian:\n1. Normal (1000 request)\n2. Brutal (10000 request)\n3. Max Destruction (100000 request)[/bold magenta]"))
+mode = int(console.input("[bold yellow]>> [/bold yellow]").strip())
 
-if mode == 1:
-    TOTAL_REQUESTS = 1000
-elif mode == 2:
-    TOTAL_REQUESTS = 10000
-else:
-    TOTAL_REQUESTS = 100000
+TOTAL_REQUESTS = {1: 1000, 2: 10000, 3: 100000}.get(mode, 1000)
 
-console.print(Panel("[bold yellow]Masukkan jumlah thread (lebih banyak = lebih cepat, tapi bisa memberatkan server!):[/bold yellow]"), end=" ")
-THREADS = int(input().strip())
+# Masukkan Jumlah Thread
+console.print(Panel("[bold yellow]Masukkan jumlah thread (lebih banyak = lebih cepat, tapi bisa memberatkan server!):[/bold yellow]"))
+THREADS = int(console.input("[bold yellow]>> [/bold yellow]").strip())
 
 # Statistik
 success = 0
 fail = 0
-status_codes = {}
-response_times = []
+active_threads = 0
 lock = threading.Lock()
-
-# Buat session biar lebih cepat
 session = requests.Session()
 
-# Fungsi pengiriman request
-def send_request(progress, task):
-    global success, fail
-    retries = 3
-    while retries > 0:
-        try:
-            start_time = time.time()
-            response = session.get(URL, timeout=5)
-            elapsed_time = (time.time() - start_time) * 1000  # Convert ke ms
-            
-            with lock:
-                response_times.append(elapsed_time)
-                status_codes[response.status_code] = status_codes.get(response.status_code, 0) + 1
-                if response.status_code == 200:
-                    success += 1
-                    console.print(f"[bold green]✅ Request sukses! {response.status_code} ({elapsed_time:.2f} ms)[/bold green]")
-                else:
-                    fail += 1
-                    console.print(f"[bold yellow]⚠️ Request gagal! {response.status_code} ({elapsed_time:.2f} ms)[/bold yellow]")
+# Fungsi untuk update tabel real-time
+def generate_table():
+    table = Table(title="📊 Status Pengujian (Real-Time)", style="bold green")
+    table.add_column("✅ Request Berhasil", style="bold cyan", justify="center")
+    table.add_column("❌ Request Gagal", style="bold red", justify="center")
+    table.add_column("🔄 Threads Aktif", style="bold yellow", justify="center")
+    
+    with lock:
+        table.add_row(str(success), str(fail), str(active_threads))
 
-            progress.update(task, advance=1)
-            return  
-        except Exception as e:
-            retries -= 1
-            console.print(f"[bold red]❌ Request error: {str(e)}. Retry {retries}x lagi...[/bold red]")
+    return table
+
+# Fungsi untuk mengirim request
+def send_request():
+    global success, fail, active_threads
+    retries = 3
 
     with lock:
-        fail += 1
-    progress.update(task, advance=1)
+        active_threads += 1
 
-# Menjalankan uji coba
-def run_test():
-    with Progress(
-        "[bold green]{task.description}",
-        BarColumn(),
-        "[bold yellow]{task.completed}/{task.total} Request",
-        TimeRemainingColumn(),
-    ) as progress:
-        task = progress.add_task("📡 Mengirim Request...", total=TOTAL_REQUESTS)
+    while retries > 0:
+        try:
+            response = session.get(URL, timeout=5)
+            with lock:
+                if response.status_code == 200:
+                    success += 1
+                else:
+                    fail += 1
+            break  # Berhenti jika berhasil
+        except:
+            retries -= 1
 
-        threads = []
-        for _ in range(TOTAL_REQUESTS):
-            thread = threading.Thread(target=send_request, args=(progress, task))
-            thread.start()
-            threads.append(thread)
+    with lock:
+        active_threads -= 1
 
-            if len(threads) >= THREADS:
-                for t in threads:
-                    t.join()
-                threads = []
-
-        for t in threads:
-            t.join()
-
+# Menjalankan Load Test
 console.print(Panel(f"🔥 [bold red]Menjalankan Load Testing ke {URL} dengan {TOTAL_REQUESTS} request menggunakan {THREADS} thread...[/bold red]"))
 start = time.time()
-run_test()
+
+with Live(generate_table(), refresh_per_second=1) as live:
+    threads = []
+    for _ in range(TOTAL_REQUESTS):
+        thread = threading.Thread(target=send_request)
+        thread.start()
+        threads.append(thread)
+
+        if len(threads) >= THREADS:
+            for t in threads:
+                t.join()
+            threads = []
+
+        live.update(generate_table())
+
+    for t in threads:
+        t.join()
+
 end = time.time()
 
-# Hasil akhir
-average_time = sum(response_times) / len(response_times) if response_times else 0
+# Hasil Akhir
+average_time = (end - start) / TOTAL_REQUESTS * 1000 if TOTAL_REQUESTS else 0
 speed = TOTAL_REQUESTS / (end - start)
 
-# Status server
 if average_time < 100:
     server_status = "[bold green]🟢 Server Sehat[/bold green]"
 elif average_time < 500:
@@ -153,7 +144,7 @@ elif average_time < 500:
 else:
     server_status = "[bold red]🔴 Server Bisa Down![/bold red]"
 
-# Menampilkan hasil
+# Tampilkan Hasil Akhir
 result_table = Table(title="📊 Hasil Load Testing", style="bold green")
 result_table.add_column("📌 Keterangan", style="bold cyan", justify="left")
 result_table.add_column("🔢 Data", style="bold white", justify="right")
@@ -167,7 +158,7 @@ result_table.add_row("⏱️ Total Waktu", f"{end - start:.2f} detik")
 
 console.print(result_table)
 
-# Simpan hasil dalam JSON
+# Simpan hasil ke JSON
 result_data = {
     "URL": URL,
     "Total Requests": TOTAL_REQUESTS,
