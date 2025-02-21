@@ -8,16 +8,16 @@ Jalankan perintah berikut di terminal atau command prompt:
 ```bash
 git clone https://github.com/alvinpemula/CEK-WEB.git  
 cd CEK-WEB  
-python load_tester.py
+python alvinpemula.py
 
 pip install -r requirements.txt
 
 
 ================================
 
+```
 
-
-SIMULASI NYA BANG MAAF KALO JELEK
+# SIMULASI NYA BANG MAAF KALO JELEK 🙏
 
 
 🔥 SUPER LOAD TESTER ULTRA PRO MAX 🔥  
@@ -59,3 +59,7 @@ Ukuran Response: 47.25 KB
 +------------+----------+  
 
 📁 Hasil pengujian telah disimpan di load_test_result.json
+
+
+
+## BISA REQUEST SCRIPT LEGAL YA🙏
