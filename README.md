@@ -80,7 +80,8 @@ python alvinpemula.py
 
 🚀 [TEST SELESAI!] 🚀
 
-# CARA FEK FILE load_test_result.json pakai cmd ii
+# CARA CEK FILE load_test_result.json 
+TERMUX KE DOWNLOAD 
 ````bash
 find / -name load_test_result.json 2>/dev/null
 
