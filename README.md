@@ -1,59 +1,79 @@
-# 🔥 SUPER LOAD TESTER ULTRA PRO MAX 🔥  
-by Alvin  
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  
+🔥  SUPER LOAD TESTER ULTRA PRO MAX  🔥  
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  
+👑 by Alvin  
 
-## 📌 Cara Menggunakan  
+🚀 Masukkan URL website yang ingin diuji:  
+> https://example.com  
 
-Jalankan perintah berikut di terminal atau command prompt:  
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  
+🔍 [Memeriksa Status Website]  
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  
+✅ Website aktif dan dapat diakses!  
 
-```bash
-git clone https://github.com/alvinpemula/CEK-WEB.git  
-cd CEK-WEB
-pip install -r requirements.txt
-python alvinpemula.py
-```
-# SIMULASI NYA BANG MAAF KALO JELEK 🙏
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  
+📡 [Mengukur Latensi Website]  
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  
+🌐 Ping ke example.com (93.184.216.34): ⚡ 123.45 ms  
 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  
+🖥️ [Informasi Server]  
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  
+🛠️ Server: ECS (nyb/1.19.5)  
+📦 Ukuran Response: 15.67 KB  
 
-🔥 SUPER LOAD TESTER ULTRA PRO MAX 🔥  
-by Alvin  
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  
+🎯 Pilih Mode Pengujian:  
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  
+1️⃣  Normal (1000 request)  
+2️⃣  Brutal (10000 request)  
+3️⃣  💀 Max Destruction (100000 request)  
+> 1  
 
-🔍 Mengecek status website...  
-✅ Website aktif!  
+🌀 Masukkan jumlah thread (Semakin tinggi, semakin cepat!):  
+> 50  
 
-🔍 Mengecek latensi website...  
-📡 Ping ke example.com (192.168.1.1): 54.32 ms  
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  
+🔥 [Menjalankan Load Testing]  
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  
+🚀 Mengirim 1000 request ke https://example.com dengan 50 thread...  
 
-🖥️ Informasi Server:  
-Server: nginx/1.18.0  
-Ukuran Response: 47.25 KB  
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  
+📊 [Status Pengujian - Real Time]  
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  
+✅ Request Berhasil | ❌ Request Gagal | 🔄 Threads Aktif  
+-----------------------------------------------------------  
+350                 | 5                | 48  
 
-🔥 Menjalankan Load Testing ke https://example.com dengan 100000 request menggunakan 500 thread...  
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  
+🏆 [Hasil Akhir Load Testing]  
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  
+📌 Keterangan                     🔢 Data  
+------------------------------------------------------------  
+✅ Request Berhasil              950  
+❌ Request Gagal                 50  
+⏳ Rata-rata Response Time       120.35 ms  
+⚡ Kecepatan Request             83.33 req/detik  
+📡 Status Server                 🟠 Server Lemot  
+⏱️ Total Waktu                   12.00 detik  
 
-📡 Mengirim Request...  ████████████░░░░░░░░░  75000/100000 Request  [00:10 remaining]  
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  
+💾 [Hasil telah disimpan!]  
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  
+📁 File: load_test_result.json  
 
-📊 Hasil Load Testing  
-+--------------------------+-------------+  
-| 📌 Keterangan           | 🔢 Data     |  
-+--------------------------+-------------+  
-| ✅ Request Berhasil      | 98560       |  
-| ❌ Request Gagal        | 1440        |  
-| ⏳ Rata-rata Response Time | 68.42 ms   |  
-| ⚡ Kecepatan Request    | 4723 req/dtk |  
-| 📡 Status Server        | 🟢 Server Sehat |  
-| ⏱️ Total Waktu          | 21.17 detik |  
-+--------------------------+-------------+  
+📜 JSON Output:  
 
-📡 Status HTTP yang Diterima  
-+------------+----------+  
-| 📌 Status  | 🔢 Jumlah |  
-+------------+----------+  
-| 200        | 98560    |  
-| 403        | 520      |  
-| 500        | 920      |  
-+------------+----------+  
+{
+    "URL": "https://example.com",
+    "Total Requests": 1000,
+    "Threads": 50,
+    "Request Berhasil": 950,
+    "Request Gagal": 50,
+    "Response Time Rata-rata": 120.35,
+    "Kecepatan Request": 83.33,
+    "Status Server": "🟠 Server Lemot",
+    "Total Waktu": 12.00
+}
 
-📁 Hasil pengujian telah disimpan di load_test_result.json
-
-
-
-## BISA REQUEST SCRIPT LEGAL YA🙏
+🚀 [TEST SELESAI!] 🚀
