@@ -1,9 +1,18 @@
+# CARA INSTALL DI TERMUX
+pkg update && pkg upgrade 
+pkg install python 
+pkg install git 
+pip install requests rich
+git clone https://github.com/alvinpemula/CEK-WEB
+cd CEK-WEB
+python alvinpemula.py
+```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  
 🔥  SUPER LOAD TESTER ULTRA PRO MAX  🔥  
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 👑 by Alvin  
 
-🚀 Masukkan URL website yang ingin diuji:  
+🚀 Masukkan URL website yang ingin diuji: 
 > https://example.com  
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  
