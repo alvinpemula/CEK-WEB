@@ -7,16 +7,10 @@ Jalankan perintah berikut di terminal atau command prompt:
 
 ```bash
 git clone https://github.com/alvinpemula/CEK-WEB.git  
-cd CEK-WEB  
-python alvinpemula.py
-
+cd CEK-WEB
 pip install -r requirements.txt
-
-
-================================
-
+python alvinpemula.py
 ```
-
 # SIMULASI NYA BANG MAAF KALO JELEK 🙏
 
 
