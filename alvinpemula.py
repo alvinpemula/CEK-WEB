@@ -3,13 +3,12 @@ import threading
 import time
 import os
 import json
+import socket
 from rich.console import Console
 from rich.table import Table
 from rich.panel import Panel
 from rich.progress import Progress, BarColumn, TimeRemainingColumn
-from rich.live import Live
 from rich.text import Text
-import socket
 
 console = Console()
 
@@ -80,28 +79,38 @@ status_codes = {}
 response_times = []
 lock = threading.Lock()
 
+# Buat session biar lebih cepat
+session = requests.Session()
+
 # Fungsi pengiriman request
 def send_request(progress, task):
     global success, fail
-    try:
-        start_time = time.time()
-        response = requests.get(URL, timeout=5)
-        elapsed_time = (time.time() - start_time) * 1000  # Convert ke ms
+    retries = 3
+    while retries > 0:
+        try:
+            start_time = time.time()
+            response = session.get(URL, timeout=5)
+            elapsed_time = (time.time() - start_time) * 1000  # Convert ke ms
+            
+            with lock:
+                response_times.append(elapsed_time)
+                status_codes[response.status_code] = status_codes.get(response.status_code, 0) + 1
+                if response.status_code == 200:
+                    success += 1
+                    console.print(f"[bold green]✅ Request sukses! {response.status_code} ({elapsed_time:.2f} ms)[/bold green]")
+                else:
+                    fail += 1
+                    console.print(f"[bold yellow]⚠️ Request gagal! {response.status_code} ({elapsed_time:.2f} ms)[/bold yellow]")
 
-        with lock:
-            response_times.append(elapsed_time)
-            status_codes[response.status_code] = status_codes.get(response.status_code, 0) + 1
-            if response.status_code == 200:
-                success += 1
-            else:
-                fail += 1
+            progress.update(task, advance=1)
+            return  
+        except Exception as e:
+            retries -= 1
+            console.print(f"[bold red]❌ Request error: {str(e)}. Retry {retries}x lagi...[/bold red]")
 
-        progress.update(task, advance=1)
-
-    except:
-        with lock:
-            fail += 1
-        progress.update(task, advance=1)
+    with lock:
+        fail += 1
+    progress.update(task, advance=1)
 
 # Menjalankan uji coba
 def run_test():
