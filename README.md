@@ -1,4 +1,5 @@
 # CARA INSTALL DI TERMUX
+``` bash
 pkg update && pkg upgrade 
 pkg install python 
 pkg install git 
@@ -6,31 +7,27 @@ pip install requests rich
 git clone https://github.com/alvinpemula/CEK-WEB
 cd CEK-WEB
 python alvinpemula.py
+
 ```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  
 🔥  SUPER LOAD TESTER ULTRA PRO MAX  🔥  
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 👑 by Alvin  
-
 🚀 Masukkan URL website yang ingin diuji: 
 > https://example.com  
-
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  
 🔍 [Memeriksa Status Website]  
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  
 ✅ Website aktif dan dapat diakses!  
-
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  
 📡 [Mengukur Latensi Website]  
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  
 🌐 Ping ke example.com (93.184.216.34): ⚡ 123.45 ms  
-
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  
 🖥️ [Informasi Server]  
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  
 🛠️ Server: ECS (nyb/1.19.5)  
 📦 Ukuran Response: 15.67 KB  
-
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  
 🎯 Pilih Mode Pengujian:  
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  
@@ -38,22 +35,18 @@ python alvinpemula.py
 2️⃣  Brutal (10000 request)  
 3️⃣  💀 Max Destruction (100000 request)  
 > 1  
-
 🌀 Masukkan jumlah thread (Semakin tinggi, semakin cepat!):  
 > 50  
-
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  
 🔥 [Menjalankan Load Testing]  
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  
 🚀 Mengirim 1000 request ke https://example.com dengan 50 thread...  
-
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  
 📊 [Status Pengujian - Real Time]  
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  
 ✅ Request Berhasil | ❌ Request Gagal | 🔄 Threads Aktif  
 -----------------------------------------------------------  
 350                 | 5                | 48  
-
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  
 🏆 [Hasil Akhir Load Testing]  
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  
@@ -86,3 +79,9 @@ python alvinpemula.py
 }
 
 🚀 [TEST SELESAI!] 🚀
+
+# CARA FEK FILE load_test_result.json pakai cmd ii
+````bash
+find / -name load_test_result.json 2>/dev/null
+
+cp load_test_result.json /storage/emulated/0/Download/
