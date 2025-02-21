@@ -1,6 +1,6 @@
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  
 🔥  SUPER LOAD TESTER ULTRA PRO MAX  🔥  
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 👑 by Alvin  
 
 🚀 Masukkan URL website yang ingin diuji:  
