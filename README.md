@@ -1,3 +1,22 @@
+# 🔥 SUPER LOAD TESTER ULTRA PRO MAX 🔥  
+by Alvin  
+
+## 📌 Cara Menggunakan  
+
+Jalankan perintah berikut di terminal atau command prompt:  
+
+```bash
+git clone https://github.com/alvinpemula/CEK-WEB.git  
+cd CEK-WEB  
+python load_tester.py
+
+pip install -r requirements.txt
+
+
+================================
+
+
+
 SIMULASI NYA BANG MAAF KALO JELEK
 
 
